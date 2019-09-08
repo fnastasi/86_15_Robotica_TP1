@@ -45,13 +45,16 @@ def Eul2RMat(phi=0, tita=0,psi=0):
     R = linalg.multi_dot([R_z_phi,R_y_tita,R_z_psi])
     # El índice de configuración
     sg_tita = sign(tita)
-    return around(R,decimals=5),sg_tita
+    
+    
+    #return around(R,decimals=3),sg_tita 
+    return R,sg_tita #si se quiere valores con redondeo, comentar esta línea y descomentar la anterior
 
 
 
 
 # In[]
-    """
+"""
 RMat2Eul es la función que resuelve el problema inverso de los ángulos de Euler
 Los parámetros de entrada son la matriz de rotación R, el indice de configuración, y 
 el ángulo phi actual
@@ -60,5 +63,40 @@ configuración, ind_conf y un ángulo actual ang_act
     ang_euler = RMat2Eul(R = R_rot, sg_tita = ind_conf, phi_act = ang_act )
 """
 def RMat2Eul(R=eye(3),sg_tita = 1,phi_act = 0):
-    return
+    
+    # Defino todos los elementos de la matriz de rotación
+    nx = R[0][0]; ny = R[1][0]; nz = R[2][0]
+    sx = R[0][1]; sy = R[1][1]; sz = R[2][1]
+    ax = R[0][2]; ay = R[1][2]; az = R[2][2]
+    
+    # Si los valores ax y ay no son cero calculo las 2 posibles soluciones
+    if(ax != 0 or ay != 0):
+        # Calculo las 2 posibles soluciones de phi teniendo en cuenta que 
+        # arctan2 devuelve valores entre -pi y pi y que los valores de phi también
+        # están definidos en ese rango                
+        phi1 = arctan2(ay,ax)
+        phi2 = (phi1 + pi) if phi1<0 else (phi1 - pi)
+        phi = array([phi1, phi2])
+        
+        # Calculo ambos valores posibles de tita
+        tita1 = arctan2(ax*cos(phi1) + ay*sin(phi1),az)
+        tita2 = -tita1
+        tita = array([tita1,tita2])
+        
+        # Calculo ambos valores posibles de psi
+        psi1 = arctan2(-sin(phi1)*nx + cos(phi1)*ny ,-sin(phi1)*sx + cos(phi1)*sy)
+        psi2 = (psi1 + pi) if phi1<0 else (psi1 - pi)
+        psi = array([psi1, psi2])
+        
+        # Si el indice de configuración es igual al signo de tita1
+        # defino un vector con las soluciones 1, en caso contrario con  las soluciones 2
+        ang = array([phi1,tita1,psi1]) if (sg_tita == sign(tita1) )  else array([phi2,tita2,psi2])
+    else:
+        # Si ax = ay = 0, entonces calculo el valor de psi a partir del valor de phi ingresados
+        phi_act = phi_act*pi/180 
+        psi = arctan2(-sin(phi_act)*nx + cos(phi_act)*ny ,-sin(phi_act)*sx + cos(phi_act)*sy)
+        ang = array([phi_act,0,psi])
+    
+    #return around(ang*180/pi, decimals = 3)
+    return ang*180/pi #si se quiere valores con redondeo, comentar esta línea y descomentar la anterior
         
