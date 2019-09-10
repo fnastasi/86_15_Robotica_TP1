@@ -6,9 +6,8 @@ Created on Wed Sep  4 08:39:11 2019
 @author: franco
 """
 
-
 # In[]
-# Se importa la biblioteca numpy para aplicar operaciones similares a como se usan en matlab
+# Se importa la biblioteca numpy para aplicar operaciones similares a las que se usan en matlab
 from numpy import *
 
 # In[]
@@ -18,6 +17,12 @@ Eul2RMat es la función que resuelve el problema directo de los ángulos de Eule
 Los parámetros de entrada son los ángulos tita, phi y psi
 Ejemplo de como utilizar la función para phi = 45°, tita = 45° y psi =0° :
     (R,sg_tita) = Eul2RMat(phi =45,tita=45,psi=0 )
+    (R,sg_tita) = Eul2RMat(45,45,0 )
+
+Precondición:
+    - Los ángulos deben ingresarse en grado
+    - phi y psi pueden encontrarse en el rango [-pi, pi]
+    - tita debe encontrarse en el rango [0, pi]
 """
 
 
@@ -75,8 +80,10 @@ def RMat2Eul(R=eye(3),sg_tita = 1,phi_act = 0):
         # arctan2 devuelve valores entre -pi y pi y que los valores de phi también
         # están definidos en ese rango                
         phi1 = arctan2(ay,ax)
-        phi2 = (phi1 + pi) if phi1<0 else (phi1 - pi)
-        phi = array([phi1, phi2])
+        # Se agrega la otra posible solución dependiendo si la primera es
+        # negativa o positiva 
+        phi2 = (phi1 + pi) if phi1<0 else (phi1 - pi) 
+        phi = array([phi1, phi2])  # Se arma un arreglo con ambas soluciones
         
         # Calculo ambos valores posibles de tita
         tita1 = arctan2(ax*cos(phi1) + ay*sin(phi1),az)
