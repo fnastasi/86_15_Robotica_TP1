@@ -36,3 +36,22 @@ for ind, Euler_ang in enumerate(datos_prueba):
     if ( not np.all(np.abs(Euler_ang_res - Euler_ang)) < tol):
         print("Error para los ángulos que se encuentran en la línea: " + str(ind + 2))
         
+
+# In[]
+
+# https://docs.scipy.org/doc/scipy/reference/generated/scipy.spatial.transform.Rotation.html
+        
+from scipy.spatial.transform import Rotation as Rot
+
+       
+# Cargo el archivo de prueba con la función loadtxt
+file_name = "angulos_prueba.txt"
+datos_prueba = np.loadtxt(file_name, delimiter=',', skiprows=1) 
+        
+        
+for ind, Euler_ang in enumerate(datos_prueba):
+    r = Rot.from_euler('ZYZ', Euler_ang, degrees=True)
+    R, ind_conf = Eul2RMat(*Euler_ang)
+    tol = 1e-6
+    if(not np.all(np.abs( R - r.as_dcm() ) < tol)):
+        print("Error para los ángulos que se encuentran en la línea: " + str(ind + 2))
