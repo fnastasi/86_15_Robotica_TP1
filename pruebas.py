@@ -55,7 +55,6 @@ for ind, Euler_ang in enumerate(datos_prueba):
     # Devuelve True si y solo si todos los elementos de  np.abs(Euler_ang_res - Euler_ang) < tol
     # son True
     
-    
     if ( not np.all(np.abs(Euler_ang_res - Euler_ang) < tol)):
         print("Error para los ángulos que se encuentran en la línea: " + str(ind + 2))
         
@@ -96,5 +95,7 @@ for ind, Euler_ang in enumerate(datos_prueba): # En Eulern_ang se guardan los 3 
     
     # Comparo si al hacer la resta entre los valores de los elementos de la matriz de rotación
     # y lo que devuelve el objeto r, el resultado es menor a la tolerancia en valor absoluto
+    
+    
     if(not np.all(np.abs( R - r.as_dcm() ) < tol)):
         print("Error para los ángulos que se encuentran en la línea: " + str(ind + 2))

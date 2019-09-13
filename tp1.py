@@ -92,7 +92,7 @@ def RMat2Eul(R=eye(3),sg_tita = 1,phi_act = 0):
         
         # Calculo ambos valores posibles de psi
         psi1 = arctan2(-sin(phi1)*nx + cos(phi1)*ny ,-sin(phi1)*sx + cos(phi1)*sy)
-        psi2 = (psi1 + pi) if phi1<0 else (psi1 - pi)
+        psi2 = (psi1 + pi) if psi1<0 else (psi1 - pi)
         psi = array([psi1, psi2])
         
         # Si el indice de configuración es igual al signo de tita1
