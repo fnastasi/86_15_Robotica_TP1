@@ -10,7 +10,8 @@ Created on Tue Sep 10 11:23:54 2019
 
 # Se importa la biblioteca numpy para aplicar operaciones similares a las que se usan en matlab
 # Adenás esta biblioteca tiene funciones para cargar datos desde un archivo csv
-import numpy as np
+import numpy as np # importa numpy y se puede acceder a la biblioteca con el apodo np
+from tp1 import * # Importa todas las funciones del archivo 'tp1.py'
 # In[]
 
 # Cargo el archivo de prueba con la función loadtxt

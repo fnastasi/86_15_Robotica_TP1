@@ -1,0 +1,12 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+"""
+Created on Thu Sep 12 23:14:52 2019
+
+@author: franco
+"""
+
+####  ¿CÓMO EJECUTAR LOS SCRIPS ? ####
+
+Se pueden ejecutar desde la consola pero se recomienda descargar el software anaconda ya
+que trae un IDE para Python llamado 'Spyder'
