@@ -51,9 +51,7 @@ def Eul2RMat(phi=0, tita=0,psi=0):
     # El índice de configuración
     sg_tita = sign(tita)
     
-    
-    #return around(R,decimals=3),sg_tita 
-    return R,sg_tita #si se quiere valores con redondeo, comentar esta línea y descomentar la anterior
+    return R,sg_tita 
 
 
 
@@ -104,6 +102,5 @@ def RMat2Eul(R=eye(3),sg_tita = 1,phi_act = 0):
         psi = arctan2(-sin(phi_act)*nx + cos(phi_act)*ny ,-sin(phi_act)*sx + cos(phi_act)*sy)
         ang = array([phi_act,0,psi])
     
-    #return around(ang*180/pi, decimals = 3)
-    return ang*180/pi #si se quiere valores con redondeo, comentar esta línea y descomentar la anterior
+    return ang*180/pi 
         
